@@ -1,0 +1,5 @@
+﻿작업자ID,프로젝트ID,프로젝트URL,작업상태,차수
+worker1,P001,http://proj1.com,진행중,1
+worker1,P002,http://proj2.com,완료,2
+worker2,P003,http://proj3.com,진행중,1
+worker3,P004,http://proj4.com,보류,1
