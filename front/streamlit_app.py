@@ -2,8 +2,17 @@ import streamlit as st
 import pandas as pd
 import os
 import sys
+import math
 
-from back.back import add_module, get_worker_list
+from back.back import get_worker_list
+
+def paginate_dataframe(df, page_size=10):
+    total_pages = math.ceil(len(df) / page_size)
+    page = st.number_input("페이지 선택", min_value=1, max_value=total_pages, value=1)
+    start = (page - 1) * page_size
+    end = start + page_size
+    st.table(df.iloc[start:end])
+
 
 # CSV 불러오기
 df = pd.read_csv("./data/250917.csv")
@@ -18,12 +27,10 @@ if worker_id:
     filtered_df, worker_name = get_worker_list(df, worker_id)
 
     if not filtered_df.empty:
-        st.subheader(f"{worker_name}님의 작업 목록")
         # 프로젝트 ID 별로 나누기
         project_ids = filtered_df['프로젝트ID'].unique()  # 프로젝트 ID 컬럼 이름 확인
-        for pid in project_ids:
-            project_df = filtered_df[filtered_df['프로젝트ID'] == pid]
-            st.table(project_df)
+        st.subheader(f"{worker_name}님의 작업 목록")
+        paginate_dataframe(filtered_df, page_size=10)
     else:
         st.warning("해당 작업자의 작업 내역이 없습니다.")
 
