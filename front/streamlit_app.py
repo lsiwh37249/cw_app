@@ -18,7 +18,6 @@ st.title("작업자별 작업 목록 조회")
 worker_id = st.text_input("작업자 ID를 입력하세요:")
 
 if worker_id:
-    #filtered_df = df[df["작업자ID"] == worker_id]
     filtered_df = get_worker_list(df, worker_id)
 
     if not filtered_df.empty:
