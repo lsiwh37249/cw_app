@@ -38,4 +38,3 @@ if worker_id:
     else:
         st.warning("해당 작업자의 작업 내역이 없습니다.")
 
-# 예시 218121
