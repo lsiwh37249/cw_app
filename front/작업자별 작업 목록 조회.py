@@ -13,17 +13,21 @@ def paginate_dataframe(df, page_size=10):
     end = start + page_size
     st.table(df.iloc[start:end])
 
+st.title("작업자별 작업 목록 조회")
+
+st.set_page_config(
+    page_title="작업 조회 페이지",  # 브라우저 탭 이름
+    page_icon="📋",                # 아이콘 (선택)
+    layout="wide"
+)
 
 # CSV 불러오기
 df = pd.read_csv("./data/250917.csv")
-
-st.title("작업자별 작업 목록 조회")
 
 # 작업자 ID 입력
 worker_id = st.text_input("작업자 ID를 입력하세요:")
 
 if worker_id:
-
     filtered_df, worker_name = get_worker_list(df, worker_id)
 
     if not filtered_df.empty:
