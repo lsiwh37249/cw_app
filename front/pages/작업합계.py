@@ -5,6 +5,7 @@ import pandasql as ps  # pandasql 사용
 import io
 from io import BytesIO
 import xlsxwriter
+import duckdb
 
 # --- Streamlit 페이지 설정 ---
 st.set_page_config(
@@ -27,15 +28,18 @@ SELECT
     "Worker ID",
     "작업자 닉네임",
     COUNT("데이터 ID") AS "작업 수량",
-    SUM("유효 오브젝트 수") AS "유효 오브젝트_수 합계"
+    COUNT(CASE WHEN "작업불가여부" = 'Y' THEN 1 END) AS "작업 불가 여부 합계",
+    COUNT("데이터 ID") - COUNT(CASE WHEN "작업불가여부" = 'Y' THEN 1 END) AS "인정 작업 수량",
+    SUM("유효 오브젝트 수") AS "유효 오브젝트_수 합계",
+
 FROM df
 WHERE "작업 종료일" IS NOT NULL
   AND DATE("작업 종료일") <= DATE('{today}')
 GROUP BY "Worker ID", "작업자 닉네임"
 ORDER BY "Worker ID"
 """
+worker_result = duckdb.query(worker_query).to_df()
 
-worker_result = ps.sqldf(worker_query, locals())
 
 # --- SQL 쿼리: 검수자 집계 ---
 checker_query = f"""
@@ -43,7 +47,9 @@ SELECT
     "Checker ID",
     "검수자 닉네임",
     COUNT("데이터 ID") AS "작업 수량",
-    SUM("유효 오브젝트 수") AS "유효 오브젝트_수 합계"
+    COUNT(CASE WHEN "작업불가여부" = 'Y' THEN 1 END) AS "작업 불가 여부 합계",
+    COUNT("데이터 ID") - COUNT(CASE WHEN "작업불가여부" = 'Y' THEN 1 END) AS "인정 작업 수량",
+    SUM("유효 오브젝트 수") AS "유효 오브젝트_수 합계",
 FROM df
 WHERE "검수 종료일" IS NOT NULL
   AND DATE("검수 종료일") <= DATE('{today}')
@@ -51,7 +57,8 @@ GROUP BY "Checker ID", "검수자 닉네임"
 ORDER BY "Checker ID"
 """
 
-checker_result = ps.sqldf(checker_query, locals())
+checker_result = duckdb.query(checker_query).to_df()
+
 
 # --- Excel 변환 함수 ---
 def convert_df_to_excel(df):
