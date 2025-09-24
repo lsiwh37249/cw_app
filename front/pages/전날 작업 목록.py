@@ -26,7 +26,8 @@ SELECT
     "데이터 ID",
     "작업자 닉네임",
     "검수자 닉네임",
-    "검수 종료일"
+    "검수 종료일",
+    "CO 모니터링 URL"
 FROM df
 WHERE "검수 종료일" IS NOT NULL
   AND DATE("검수 종료일") <= DATE('{yesterday}')
