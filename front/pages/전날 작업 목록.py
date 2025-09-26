@@ -13,9 +13,9 @@ st.set_page_config(
     page_icon="📋",
     layout="wide"
 )
-
+today = datetime.today().date().strftime('%Y%m%d')
 # --- CSV 불러오기 ---
-df = pd.read_csv("./data/250917.csv")
+df = pd.read_csv(f"./data/{today}.csv")
 # 오늘 날짜
 today = datetime.today().date()
 yesterday = today - timedelta(days=1)
@@ -29,7 +29,7 @@ SELECT
     "검수 종료일",
     "CO 모니터링 URL"
 FROM df
-WHERE "검수 종료일" IS NOT NULL
+WHERE "검수 종료일" IS NOT NULL AND "작업 상태" IN ('ALL_FINISHED', 'CHECK_END')
   AND DATE("검수 종료일") <= DATE('{yesterday}')
   AND DATE("검수 종료일") >= DATE('{yesterday}')
 """
