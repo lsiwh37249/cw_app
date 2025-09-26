@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import sys
 import math
+from datetime import datetime
 
 from back.back import get_checker_list
 
@@ -21,8 +22,9 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSV 불러오기
-df = pd.read_csv("./data/250917.csv")
+today = datetime.today().date().strftime('%Y%m%d')
+# --- CSV 불러오기 ---
+df = pd.read_csv(f"./data/{today}.csv")
 
 # 검수자 ID 입력
 worker_id = st.text_input("검수자 ID를 입력하세요:")
