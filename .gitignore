@@ -3,4 +3,4 @@
 *.log
 *.txt
 *.out
-*.pyc
+*.py[cod]
