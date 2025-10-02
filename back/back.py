@@ -23,5 +23,5 @@ def get_checker_list(df, checker_id):
     filtered_df["Checker ID"] = filtered_df["Checker ID"].astype(int)
     worker_name = filtered_df["검수자 닉네임"].iloc[0]
     filtered_df = filtered_df.sort_values(by="작업 종료일", ascending=False)
-    filtered_df = filtered_df[["Worker ID", "작업자 닉네임", "검수자 닉네임", "프로젝트ID", "CO 모니터링 URL"]]
+    filtered_df = filtered_df[["Checker ID", "작업자 닉네임", "검수자 닉네임", "프로젝트ID", "CO 모니터링 URL"]]
     return filtered_df, worker_name
