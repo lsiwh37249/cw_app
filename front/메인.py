@@ -38,7 +38,7 @@ result["검수 종료일"]= result["검수 종료일"].astype(str)
 # 제목과 설명
 st.title("일별 검수 현황")
 # 2개 컬럼으로 나누기 (차트를 더 크게)
-col1, col2 = st.columns([1, 2])
+col1, col2 = st.columns([1, 3])
 
 # 왼쪽 컬럼: 데이터 테이블
 with col1:
