@@ -27,7 +27,7 @@ SELECT
     "작업자 닉네임",
     "검수자 닉네임",
     "검수 종료일",
-    "CO 모니터링 URL"
+    "모니터링 URL"
 FROM df
 WHERE "검수 종료일" IS NOT NULL AND "작업 상태" IN ('ALL_FINISHED', 'CHECK_END')
   AND DATE("검수 종료일") <= DATE('{yesterday}')
