@@ -22,7 +22,7 @@ yesterday = today - timedelta(days=1)
 # --- SQL 쿼리: 작업자 집계 ---
 query = f"""
 SELECT
-    "프로젝트ID",
+    "프로젝트 ID",
     "데이터 ID",
     "작업자 닉네임",
     "검수자 닉네임",
